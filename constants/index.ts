@@ -71,3 +71,5 @@ export const recentSessions = [
     color: "#C8FFDF",
   },
 ];
+
+export default recentSessions;
