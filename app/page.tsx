@@ -42,10 +42,9 @@ const Page = () => {
       <section className='home-section'>
 
         <CompanionsList 
-        title="Recently Completed Sessions"
-        companions={recentSessions}
-        className="w-2/3 max-lg:w-full"
-        />
+          title="Recently Completed Sessions"
+          companions={recentSessions}
+          className="w-2/3 max-lg:w-full" color={''}        />
         <CTA />
       </section>
 
