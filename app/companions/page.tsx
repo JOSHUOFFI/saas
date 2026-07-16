@@ -1,10 +1,40 @@
-import React from 'react'
+import CompanionCard from "@/components/CompanionCard";
+import { getAllCompanion } from "@/lib/actions/companion.action";
 
-const CompanionsLibrary = () => {
+//using url search params
+
+const CompanionsLibrary = async({ searchParams }: SearchParams) => {
+
+  const filters = await searchParams;
+  const subject = filters.subject ? filters.subject : '';
+   const topic = filters.topic ? filters.topic : '';
+
+   //we have the subject, now we can fetch the companions using the server action we created
+  const companions = await getAllCompanion({subject, topic});
+  console.log(companions);
+
+  
+  
+ 
   return (
-    <div>
-      Companion Library
-    </div>
+   <main>
+    <section className="flex justify-between gap-4 max-sm:flex-col"> 
+      <h1>Companion Library</h1>
+      <div>
+          filter
+      </div>
+      </section>
+      
+      <section className="companions-grid">
+        {companions.map((companion) => 
+        (<CompanionCard key={companion.id} {...companion} />
+
+        ))}
+
+      
+
+    </section>
+   </main>
   )
 }
 
