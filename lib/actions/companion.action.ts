@@ -7,13 +7,13 @@ import { createSupabaseClient } from '../supabase';
 
 // first create companion
 export const createCompanion = async (formData: CreateCompanion) => {
-  const { userId: author, getToken } = await auth();
+  const { userId: author } = await auth();
 
   // Debugging
-  console.log("Author:", author);
+  // console.log("Author:", author);
 
-  const token = await getToken();
-  console.log("JWT Token:", token);
+  // const token = await getToken();
+  // console.log("JWT Token:", token);
 
   const supabase = await createSupabaseClient();
 
@@ -22,8 +22,7 @@ export const createCompanion = async (formData: CreateCompanion) => {
     .insert({ ...formData, author })
     .select();
 
-  if (error || !data)
-    throw new Error(error?.message || "Failed to create a companion");
+  if (error || !data)throw new Error(error?.message || "Failed to create a companion");
 
   return data[0];
 };
@@ -52,10 +51,10 @@ export const getAllCompanion = async ({limit = 10, page=1, subject, topic}: GetA
   const { data: companions, error } = await query;
 
   // if (error) throw new Error(error.message);
-  if (error) {
-    console.error(error);
-    throw new Error(error.message);
-  }
+  // if (error) {
+  //   console.error(error);
+  //   throw new Error(error.message);
+  // }
 
   return companions ?? [];
   //"If companions is null or undefined, return an empty array instead."

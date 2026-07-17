@@ -1,5 +1,8 @@
 import CompanionCard from "@/components/CompanionCard";
+import SearchInput from "@/components/SearchInput";
+import SubjectFilters from "@/components/SubjectFilters";
 import { getAllCompanion } from "@/lib/actions/companion.action";
+import { getSubjectColor } from "@/lib/utils";
 
 //using url search params
 
@@ -20,15 +23,18 @@ const CompanionsLibrary = async({ searchParams }: SearchParams) => {
    <main>
     <section className="flex justify-between gap-4 max-sm:flex-col"> 
       <h1>Companion Library</h1>
-      <div>
-          filter
+      <div className="flex gap-4">
+         < SearchInput/>
+         <SubjectFilters/>
       </div>
       </section>
       
       <section className="companions-grid">
         {companions.map((companion) => 
-        (<CompanionCard key={companion.id} {...companion} />
-
+        (<CompanionCard key={companion.id} {...companion} 
+          color={getSubjectColor(companion.subject)}
+        />
+          
         ))}
 
       
