@@ -1,9 +1,8 @@
-'use server';
+"use server";
 
-import { auth } from '@clerk/nextjs/server'
+import { auth } from "@clerk/nextjs/server";
 
-import { createSupabaseClient } from '../supabase';
-
+import { createSupabaseClient } from "../supabase";
 
 // first create companion
 export const createCompanion = async (formData: CreateCompanion) => {
@@ -22,12 +21,18 @@ export const createCompanion = async (formData: CreateCompanion) => {
     .insert({ ...formData, author })
     .select();
 
-  if (error || !data)throw new Error(error?.message || "Failed to create a companion");
+  if (error || !data)
+    throw new Error(error?.message || "Failed to create a companion");
 
   return data[0];
 };
 
-export const getAllCompanion = async ({limit = 10, page=1, subject, topic}: GetAllCompanions) => {
+export const getAllCompanion = async ({
+  limit = 10,
+  page = 1,
+  subject,
+  topic,
+}: GetAllCompanions) => {
   const supabase = await createSupabaseClient();
   // to mke a connection to our database {fetching it}
   // firt create a query
@@ -50,13 +55,25 @@ export const getAllCompanion = async ({limit = 10, page=1, subject, topic}: GetA
 
   const { data: companions, error } = await query;
 
-  // if (error) throw new Error(error.message);
-  // if (error) {
-  //   console.error(error);
-  //   throw new Error(error.message);
-  // }
+  if (error) throw new Error(error.message);
 
   return companions ?? [];
   //"If companions is null or undefined, return an empty array instead."
-}
+};
 
+export const getCompanion = async (id: string) => {
+  //get access t our supabase
+  const supabase = await createSupabaseClient();
+
+  //from supabase, give me everything that equals to the id we aare passing from the params
+  const { data, error } = await supabase
+    .from("companions")
+    .select()
+    .eq("id", id);
+
+  if (error) return console.log(error);
+
+  return data[0];
+};
+
+//head to companion/id and fetch these details
