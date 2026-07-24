@@ -11,7 +11,8 @@ import {
 import { cn } from "@/lib/utils"
 // import getSubjectColor from "@/lib/utils"
 import Link from "next/link"
-import Image from "next/image"
+import Image from "next/image";
+import { getSubjectColor } from '@/lib/utils'
 
 
 interface CompanionsListProps{
@@ -50,7 +51,7 @@ const CompanionsList = ({title, companions, className, color}: CompanionsListPro
                 alt={subject}
                 width={35}
                 height={35}
-                 style={{ backgroundColor: color}}
+                    style={{ backgroundColor: getSubjectColor(subject) }}
                 />
               </div>
               <div className="flex flex-col gap-2">
@@ -75,7 +76,7 @@ const CompanionsList = ({title, companions, className, color}: CompanionsListPro
                   alt={subject} 
                   width={21}
                   height={19}
-                  style={{ backgroundColor: color}}
+                style={{ backgroundColor: getSubjectColor(subject) }}
                   />
               </div>
 
